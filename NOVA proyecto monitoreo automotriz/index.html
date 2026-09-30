@@ -1,0 +1,5182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="NOVA Monitoring - Monitoreo de maquinaria industrial para procesos automotrices."
+    >
+
+    <title>
+        NOVA Monitoring | Monitoreo Industrial Automotriz
+    </title>
+
+
+    <!-- =====================================================
+         FUENTE
+    ====================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         ESTILOS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- =====================================================
+         ESTILOS NUEVOS DE ACCESO Y PERFIL
+         Se mantienen dentro del HTML para no modificar todavía
+         el style.css que ya funciona.
+    ====================================================== -->
+
+    <style>
+
+        /* =====================================================
+           PANTALLA DE LOGIN NOVA
+        ====================================================== */
+
+        .nova-login-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(56, 189, 248, 0.10),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(139, 92, 246, 0.12),
+                    transparent 35%
+                ),
+                #06111f;
+            overflow-y: auto;
+        }
+
+
+        .nova-login-screen.hidden {
+            display: none;
+        }
+
+
+        .nova-login-box {
+            width: min(100%, 470px);
+            padding: 38px;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 24px;
+            background: rgba(12, 27, 46, 0.96);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.45),
+                0 0 0 1px rgba(56, 189, 248, 0.03);
+            backdrop-filter: blur(18px);
+        }
+
+
+        .nova-login-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+
+        .nova-login-brand-image {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            background: #091827;
+            flex-shrink: 0;
+        }
+
+
+        .nova-login-brand-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+        .nova-login-brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .nova-login-brand-text strong {
+            font-size: 27px;
+            line-height: 1;
+            letter-spacing: 0.08em;
+            color: #f8fafc;
+        }
+
+
+        .nova-login-brand-text span {
+            margin-top: 7px;
+            color: #94a3b8;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+
+        .nova-login-kicker {
+            display: block;
+            margin-bottom: 8px;
+            color: #38bdf8;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+        }
+
+
+        .nova-login-box h1 {
+            margin: 0;
+            color: #f8fafc;
+            font-size: 27px;
+            line-height: 1.2;
+        }
+
+
+        .nova-login-description {
+            margin: 10px 0 28px;
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+
+        .nova-login-field {
+            margin-bottom: 17px;
+        }
+
+
+        .nova-login-field label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        .nova-login-field input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 14px;
+            border: 1px solid rgba(148, 163, 184, 0.20);
+            border-radius: 11px;
+            outline: none;
+            background: #081827;
+            color: #f8fafc;
+            font-family: inherit;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+
+
+        .nova-login-field input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.10);
+        }
+
+
+        .nova-login-field input::placeholder {
+            color: #64748b;
+        }
+
+
+        .nova-login-button {
+            width: 100%;
+            margin-top: 7px;
+            padding: 14px 18px;
+            border: 0;
+            border-radius: 11px;
+            cursor: pointer;
+            background: linear-gradient(
+                135deg,
+                #38bdf8,
+                #6366f1
+            );
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 800;
+            transition: 0.2s ease;
+        }
+
+
+        .nova-login-button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.06);
+        }
+
+
+        .nova-login-error {
+            display: none;
+            margin-top: 14px;
+            padding: 11px 13px;
+            border: 1px solid rgba(248, 113, 113, 0.20);
+            border-radius: 10px;
+            background: rgba(127, 29, 29, 0.15);
+            color: #fca5a5;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        .nova-login-error.show {
+            display: block;
+        }
+
+
+        .nova-login-demo {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(148, 163, 184, 0.10);
+            color: #64748b;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+
+        .nova-login-demo strong {
+            color: #94a3b8;
+        }
+
+
+        /* =====================================================
+           PERFIL SUPERIOR
+        ====================================================== */
+
+        .topbar-user {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                #38bdf8,
+                #6366f1
+            );
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+
+        .user-info {
+            min-width: 0;
+        }
+
+
+        .user-info strong,
+        .user-info span {
+            display: block;
+        }
+
+
+        .user-info strong {
+            color: #f8fafc;
+            font-size: 12px;
+            line-height: 1.3;
+        }
+
+
+        .user-info span {
+            margin-top: 3px;
+            color: #94a3b8;
+            font-size: 10px;
+        }
+
+
+        .logout-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            margin-left: 5px;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 9px;
+            background: rgba(15, 23, 42, 0.65);
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.2s ease;
+        }
+
+
+        .logout-button:hover {
+            border-color: rgba(248, 113, 113, 0.35);
+            color: #fca5a5;
+            background: rgba(127, 29, 29, 0.15);
+        }
+
+
+        /* =====================================================
+           ETIQUETA DE ROL
+        ====================================================== */
+
+        .user-role-badge {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            margin-top: 4px;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(56, 189, 248, 0.08);
+            color: #7dd3fc;
+            font-size: 9px !important;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           ELEMENTOS CONTROLADOS POR ROL
+        ====================================================== */
+
+        [data-role="admin"] {
+            transition: opacity 0.2s ease;
+        }
+
+
+        .nova-permission-locked {
+            opacity: 0.45;
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE LOGIN
+        ====================================================== */
+
+        @media (max-width: 560px) {
+
+            .nova-login-screen {
+                padding: 15px;
+            }
+
+            .nova-login-box {
+                padding: 27px 22px;
+                border-radius: 20px;
+            }
+
+            .nova-login-brand-image {
+                width: 54px;
+                height: 54px;
+            }
+
+            .nova-login-brand-text strong {
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         LOGIN NOVA
+         Pantalla inicial del prototipo.
+         La lógica se manejará desde script.js.
+    ====================================================== -->
+
+    <div
+        id="novaLoginScreen"
+        class="nova-login-screen"
+    >
+
+        <div class="nova-login-box">
+
+
+            <div class="nova-login-brand">
+
+                <div class="nova-login-brand-image">
+
+                    <img
+                        src="./astronauta-nova.jpeg"
+                        alt="NOVA Monitoring"
+                    >
+
+                </div>
+
+
+                <div class="nova-login-brand-text">
+
+                    <strong>
+                        NOVA
+                    </strong>
+
+                    <span>
+                        Industrial Monitoring
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <span class="nova-login-kicker">
+                ACCESO AL SISTEMA
+            </span>
+
+
+            <h1>
+                Iniciar sesión
+            </h1>
+
+
+            <p class="nova-login-description">
+                Accede a la plataforma NOVA para consultar el estado
+                de la maquinaria industrial y gestionar los activos
+                según tu perfil de usuario.
+            </p>
+
+
+            <form id="novaLoginForm">
+
+
+                <div class="nova-login-field">
+
+                    <label for="novaUsername">
+                        Usuario
+                    </label>
+
+                    <input
+                        type="text"
+                        id="novaUsername"
+                        name="username"
+                        placeholder="Ingresa tu usuario"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="nova-login-field">
+
+                    <label for="novaPassword">
+                        Contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        id="novaPassword"
+                        name="password"
+                        placeholder="Ingresa tu contraseña"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="nova-login-button"
+                    id="novaLoginButton"
+                >
+                    Ingresar a NOVA
+                </button>
+
+
+                <div
+                    id="novaLoginError"
+                    class="nova-login-error"
+                >
+                    Usuario o contraseña incorrectos. Verifica los datos
+                    e inténtalo nuevamente.
+                </div>
+
+
+            </form>
+
+
+            <div class="nova-login-demo">
+
+                <strong>
+                    Acceso de demostración
+                </strong>
+
+                <br>
+
+                Operativo:
+                <strong>
+                    operativo
+                </strong>
+                /
+                <strong>
+                    nova123
+                </strong>
+
+                <br>
+
+                Gerencial:
+                <strong>
+                    gerencial
+                </strong>
+                /
+                <strong>
+                    nova123
+                </strong>
+
+                <br>
+
+                Administrador:
+                <strong>
+                    admin
+                </strong>
+                /
+                <strong>
+                    nova123
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         APLICACIÓN NOVA
+    ====================================================== -->
+
+    <div
+        class="nova-app"
+        id="novaApp"
+        style="display: none;"
+    >
+
+
+        <!-- =================================================
+             BARRA LATERAL
+        ================================================== -->
+
+        <aside class="sidebar">
+
+
+            <div class="sidebar-top">
+
+
+                <!-- MARCA -->
+
+                <div class="nova-brand">
+
+                    <div class="brand-icon">
+
+                        <img
+                            src="./astronauta-nova.jpeg"
+                            alt="NOVA"
+                        >
+
+                    </div>
+
+
+                    <div class="brand-text">
+
+                        <span class="brand-name">
+                            NOVA
+                        </span>
+
+                        <span class="brand-subtitle">
+                            Monitoring
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ESTADO -->
+
+                <div class="sidebar-status">
+
+                    <span class="status-indicator green"></span>
+
+
+                    <div>
+
+                        <strong>
+                            Sistema operativo
+                        </strong>
+
+                        <span>
+                            Planta industrial
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- NAVEGACIÓN -->
+
+                <nav class="sidebar-nav">
+
+
+                    <p class="nav-section-title">
+                        MONITOREO
+                    </p>
+
+
+                    <a
+                        href="#dashboard"
+                        class="nav-item active"
+                        data-section="dashboard"
+                    >
+
+                        <span class="nav-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <rect
+                                    x="3"
+                                    y="3"
+                                    width="7"
+                                    height="7"
+                                    rx="1.5"
+                                ></rect>
+
+                                <rect
+                                    x="14"
+                                    y="3"
+                                    width="7"
+                                    height="7"
+                                    rx="1.5"
+                                ></rect>
+
+                                <rect
+                                    x="3"
+                                    y="14"
+                                    width="7"
+                                    height="7"
+                                    rx="1.5"
+                                ></rect>
+
+                                <rect
+                                    x="14"
+                                    y="14"
+                                    width="7"
+                                    height="7"
+                                    rx="1.5"
+                                ></rect>
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Inicio
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="#machines"
+                        class="nav-item"
+                        data-section="machines"
+                    >
+
+                        <span class="nav-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <rect
+                                    x="3"
+                                    y="6"
+                                    width="18"
+                                    height="12"
+                                    rx="2"
+                                ></rect>
+
+                                <path
+                                    d="M7 18v3M17 18v3M8 10h8M8 14h5"
+                                ></path>
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Máquinas
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="#machineMonitoring"
+                        class="nav-item"
+                        data-section="monitoring"
+                    >
+
+                        <span class="nav-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M4 19V5"
+                                ></path>
+
+                                <path
+                                    d="M4 19h17"
+                                ></path>
+
+                                <path
+                                    d="m7 15 4-4 3 2 5-6"
+                                ></path>
+
+                                <path
+                                    d="M17 7h2v2"
+                                ></path>
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Monitoreo
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="#alerts"
+                        class="nav-item"
+                        data-section="alerts"
+                    >
+
+                        <span class="nav-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                                ></path>
+
+                                <path
+                                    d="M10 21h4"
+                                ></path>
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Alertas
+                        </span>
+
+
+                        <span class="nav-count red">
+                            00
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="#historyPanel"
+                        class="nav-item"
+                        data-section="history"
+                    >
+
+                        <span class="nav-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="8.5"
+                                ></circle>
+
+                                <path
+                                    d="M12 7v5l3 2"
+                                ></path>
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Historial
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="#maintenance"
+                        class="nav-item"
+                        data-section="maintenance"
+                        data-role="admin"
+                    >
+
+                        <span class="nav-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M14.5 6.5a4 4 0 0 0-5.3 5.3L4 17l3 3 5.2-5.2a4 4 0 0 0 5.3-5.3l-2.1 2.1-2-2 2.1-2.1Z"
+                                ></path>
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Mantenimiento
+                        </span>
+
+                    </a>
+
+
+
+                    <p class="nav-section-title second">
+                        ADMINISTRACIÓN
+                    </p>
+
+
+
+                    <a
+                        href="#admin"
+                        class="nav-item"
+                        data-section="admin"
+                        data-role="admin"
+                    >
+
+                        <span class="nav-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="3"
+                                ></circle>
+
+                                <path
+                                    d="M5 20c0-3.2 2.8-5 7-5s7 1.8 7 5"
+                                ></path>
+
+                                <path
+                                    d="M19 8v4M17 10h4"
+                                ></path>
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Administrar
+                        </span>
+
+                    </a>
+
+
+                </nav>
+
+            </div>
+
+
+
+            <!-- PIE DEL SIDEBAR -->
+
+            <div class="sidebar-footer">
+
+
+                <div class="sidebar-plant">
+
+                    <span class="plant-dot"></span>
+
+
+                    <div>
+
+                        <strong>
+                            Proceso automotriz
+                        </strong>
+
+                        <span>
+                            Monitoreo industrial
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <span class="sidebar-version">
+                    NOVA v1.0
+                </span>
+
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- =================================================
+             CONTENIDO PRINCIPAL
+        ================================================== -->
+
+        <main class="main-content">
+
+
+            <!-- =================================================
+                 BARRA SUPERIOR
+            ================================================== -->
+
+            <header class="topbar">
+
+
+                <div class="topbar-left">
+
+                    <div class="page-title-wrap">
+
+                        <span class="eyebrow">
+                            INTELIGENCIA DE MANUFACTURA
+                        </span>
+
+
+                        <h1>
+                            NOVA Monitoring
+                        </h1>
+
+
+                        <p>
+                            Monitoreo de maquinaria industrial automotriz
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="topbar-right">
+
+
+                    <div class="topbar-date">
+
+                        <span class="date-label">
+                            ESTADO DE PLANTA
+                        </span>
+
+                        <strong>
+                            Operativa
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         USUARIO ACTIVO
+                    ================================================== -->
+
+                    <div class="topbar-user">
+
+                        <div
+                            class="user-avatar"
+                            id="userAvatar"
+                        >
+                            N
+                        </div>
+
+
+                        <div class="user-info">
+
+                            <strong id="userName">
+                                Usuario NOVA
+                            </strong>
+
+                            <span
+                                id="userRole"
+                                class="user-role-badge"
+                            >
+                                Monitoreo
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            id="logoutButton"
+                            class="logout-button"
+                            title="Cerrar sesión"
+                            aria-label="Cerrar sesión"
+                        >
+                            ↪
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+            </header>
+
+
+
+            <!-- =================================================
+                 CONTENIDO DEL DASHBOARD
+            ================================================== -->
+
+            <div
+                class="dashboard-content"
+                id="dashboard"
+            >
+
+
+                <!-- =================================================
+                     INDICADORES PRINCIPALES
+                ================================================== -->
+
+                <section class="kpi-grid">
+
+
+                    <!-- TOTAL -->
+
+                    <article class="kpi-card">
+
+                        <div class="kpi-icon purple">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                ></rect>
+
+                                <path
+                                    d="M7 9h10M7 13h6"
+                                ></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="kpi-content">
+
+                            <span class="kpi-label">
+                                MÁQUINAS MONITOREADAS
+                            </span>
+
+
+                            <strong
+                                class="kpi-value"
+                                id="totalDevices"
+                            >
+                                20
+                            </strong>
+
+
+                            <span class="kpi-foot">
+                                Activos registrados
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- NORMAL -->
+
+                    <article class="kpi-card">
+
+                        <div class="kpi-icon green">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="m5 12 4 4L19 6"
+                                ></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="kpi-content">
+
+                            <span class="kpi-label">
+                                OPERACIÓN NORMAL
+                            </span>
+
+
+                            <strong
+                                class="kpi-value"
+                                id="normalDevices"
+                            >
+                                18
+                            </strong>
+
+
+                            <span class="kpi-foot">
+                                Condición estable
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- WARNING -->
+
+                    <article class="kpi-card">
+
+                        <div class="kpi-icon yellow">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M12 4 3 20h18L12 4Z"
+                                ></path>
+
+                                <path
+                                    d="M12 9v5"
+                                ></path>
+
+                                <path
+                                    d="M12 17h.01"
+                                ></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="kpi-content">
+
+                            <span class="kpi-label">
+                                EN SEGUIMIENTO
+                            </span>
+
+
+                            <strong
+                                class="kpi-value"
+                                id="warningDevices"
+                            >
+                                01
+                            </strong>
+
+
+                            <span class="kpi-foot">
+                                Requiere supervisión
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- ANOMALÍAS -->
+
+                    <article class="kpi-card">
+
+                        <div class="kpi-icon red">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="8.5"
+                                ></circle>
+
+                                <path
+                                    d="M12 8v5"
+                                ></path>
+
+                                <path
+                                    d="M12 16h.01"
+                                ></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="kpi-content">
+
+                            <span class="kpi-label">
+                                ANOMALÍAS
+                            </span>
+
+
+                            <strong
+                                class="kpi-value"
+                                id="anomalyDevices"
+                            >
+                                01
+                            </strong>
+
+
+                            <span class="kpi-foot">
+                                Requiere diagnóstico
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     RESUMEN DEL PROCESO POR FAMILIAS
+                ================================================== -->
+
+                <section
+                    class="panel process-panel"
+                    id="monitoringOverview"
+                >
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-kicker">
+                                PROCESO INDUSTRIAL
+                            </span>
+
+
+                            <h2>
+                                Resumen del proceso por familias
+                            </h2>
+
+                        </div>
+
+
+                        <div class="panel-status">
+
+                            <span class="status-indicator green"></span>
+
+                            Datos de demostración
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="process-area">
+
+
+                        <!-- FAMILIA 1 -->
+
+                        <section class="process-family">
+
+                            <div class="family-header">
+
+                                <div class="family-number">
+                                    01
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        FAMILIA
+                                    </span>
+
+                                    <strong>
+                                        Recepción y logística
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="family-machines">
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-LOG-01"
+                                    data-family="recepcion-logistica"
+                                    data-name="Montacargas industrial"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <rect x="3" y="7" width="13" height="9" rx="1"></rect>
+
+                                            <path d="M16 10h3l2 3v3h-5M7 16v3M17 16v3"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-LOG-01
+                                    </span>
+
+                                    <strong>
+                                        Montacargas industrial
+                                    </strong>
+
+                                    <small>
+                                        Temperatura · Batería · Corriente
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-LOG-02"
+                                    data-family="recepcion-logistica"
+                                    data-name="AGV / Vehículo guiado automático"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <rect x="4" y="8" width="16" height="9" rx="2"></rect>
+
+                                            <circle cx="8" cy="18" r="1.5"></circle>
+
+                                            <circle cx="16" cy="18" r="1.5"></circle>
+
+                                            <path d="M8 8V5h8v3"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-LOG-02
+                                    </span>
+
+                                    <strong>
+                                        AGV / Vehículo guiado automático
+                                    </strong>
+
+                                    <small>
+                                        Batería · Velocidad · Posición
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-LOG-03"
+                                    data-family="recepcion-logistica"
+                                    data-name="Transportador industrial"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M4 15h16"></path>
+
+                                            <circle cx="7" cy="18" r="2"></circle>
+
+                                            <circle cx="17" cy="18" r="2"></circle>
+
+                                            <path d="M7 15V9h10v6"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-LOG-03
+                                    </span>
+
+                                    <strong>
+                                        Transportador industrial
+                                    </strong>
+
+                                    <small>
+                                        Velocidad · Vibración · Temperatura
+                                    </small>
+
+                                </article>
+
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- FAMILIA 2 -->
+
+                        <section class="process-family">
+
+                            <div class="family-header">
+
+                                <div class="family-number">
+                                    02
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        FAMILIA
+                                    </span>
+
+                                    <strong>
+                                        Estampado y conformado
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="family-machines">
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-EST-04"
+                                    data-family="estampado-conformado"
+                                    data-name="Prensa hidráulica"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M5 19h14M7 19V8h10v11M9 8V5h6v3"></path>
+
+                                            <path d="M10 12h4"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-EST-04
+                                    </span>
+
+                                    <strong>
+                                        Prensa hidráulica
+                                    </strong>
+
+                                    <small>
+                                        Presión · Temperatura · Vibración
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-EST-05"
+                                    data-family="estampado-conformado"
+                                    data-name="Prensa mecánica"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M5 19h14M7 19V8h10v11"></path>
+
+                                            <circle cx="12" cy="7" r="2"></circle>
+
+                                            <path d="M12 4v3"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-EST-05
+                                    </span>
+
+                                    <strong>
+                                        Prensa mecánica
+                                    </strong>
+
+                                    <small>
+                                        Fuerza · Velocidad · Vibración
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-EST-06"
+                                    data-family="estampado-conformado"
+                                    data-name="Máquina de corte CNC"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <rect x="4" y="5" width="16" height="13" rx="2"></rect>
+
+                                            <path d="M8 9h8M8 13h5"></path>
+
+                                            <path d="M9 18v2M15 18v2"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-EST-06
+                                    </span>
+
+                                    <strong>
+                                        Máquina de corte CNC
+                                    </strong>
+
+                                    <small>
+                                        Velocidad · Corriente · Vibración
+                                    </small>
+
+                                </article>
+
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- FAMILIA 3 -->
+
+                        <section class="process-family">
+
+                            <div class="family-header">
+
+                                <div class="family-number">
+                                    03
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        FAMILIA
+                                    </span>
+
+                                    <strong>
+                                        Carrocería y soldadura
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="family-machines">
+
+
+                                <article
+                                    class="process-machine warning"
+                                    data-machine="EQ-CAR-07"
+                                    data-family="carroceria-soldadura"
+                                    data-name="Robot de soldadura por puntos"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <circle cx="8" cy="17" r="2"></circle>
+
+                                            <circle cx="16" cy="17" r="2"></circle>
+
+                                            <path d="M8 15V7l6-3 2 3v8M8 9h8"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-CAR-07
+                                    </span>
+
+                                    <strong>
+                                        Robot de soldadura por puntos
+                                    </strong>
+
+                                    <small>
+                                        Corriente · Temperatura · Ciclos
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-CAR-08"
+                                    data-family="carroceria-soldadura"
+                                    data-name="Robot de soldadura por arco"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <circle cx="8" cy="17" r="2"></circle>
+
+                                            <circle cx="16" cy="17" r="2"></circle>
+
+                                            <path d="M8 15V7h5l3 3v5M8 10h8"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-CAR-08
+                                    </span>
+
+                                    <strong>
+                                        Robot de soldadura por arco
+                                    </strong>
+
+                                    <small>
+                                        Corriente · Temperatura · Velocidad
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-CAR-09"
+                                    data-family="carroceria-soldadura"
+                                    data-name="Sistema de sujeción / Clamp"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M5 8h14M7 8v9M17 8v9"></path>
+
+                                            <path d="M4 17h16"></path>
+
+                                            <path d="M9 5h6"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-CAR-09
+                                    </span>
+
+                                    <strong>
+                                        Sistema de sujeción / Clamp
+                                    </strong>
+
+                                    <small>
+                                        Presión · Posición · Ciclos
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-CAR-10"
+                                    data-family="carroceria-soldadura"
+                                    data-name="Robot de manipulación"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M5 19h14"></path>
+
+                                            <path d="M8 19V12l4-3 4 3v7"></path>
+
+                                            <circle cx="12" cy="6" r="2"></circle>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-CAR-10
+                                    </span>
+
+                                    <strong>
+                                        Robot de manipulación
+                                    </strong>
+
+                                    <small>
+                                        Posición · Velocidad · Torque
+                                    </small>
+
+                                </article>
+
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- FAMILIA 4 -->
+
+                        <section class="process-family">
+
+                            <div class="family-header">
+
+                                <div class="family-number">
+                                    04
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        FAMILIA
+                                    </span>
+
+                                    <strong>
+                                        Pintura y tratamiento
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="family-machines">
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-PIN-11"
+                                    data-family="pintura-tratamiento"
+                                    data-name="Robot de pintura"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M6 18h12"></path>
+
+                                            <path d="M8 18V9h8v9"></path>
+
+                                            <path d="M10 9V6h4v3"></path>
+
+                                            <path d="M10 13h4"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-PIN-11
+                                    </span>
+
+                                    <strong>
+                                        Robot de pintura
+                                    </strong>
+
+                                    <small>
+                                        Presión · Velocidad · Temperatura
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-PIN-12"
+                                    data-family="pintura-tratamiento"
+                                    data-name="Cabina de pintura / Ventilación"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M5 19h14M7 19V8h10v11"></path>
+
+                                            <path d="M9 8V5h6v3"></path>
+
+                                            <path d="M9 12h6"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-PIN-12
+                                    </span>
+
+                                    <strong>
+                                        Cabina de pintura / Ventilación
+                                    </strong>
+
+                                    <small>
+                                        Temperatura · Presión · Flujo de aire
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine anomaly"
+                                    data-machine="EQ-PIN-13"
+                                    data-family="pintura-tratamiento"
+                                    data-name="Horno de curado"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <rect x="4" y="6" width="16" height="13" rx="2"></rect>
+
+                                            <path d="M8 10c2-2 2 3 4 1s2-3 4-1"></path>
+
+                                            <path d="M8 15h8"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-PIN-13
+                                    </span>
+
+                                    <strong>
+                                        Horno de curado
+                                    </strong>
+
+                                    <small>
+                                        Temperatura · Tiempo · Flujo de aire
+                                    </small>
+
+                                </article>
+
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- FAMILIA 5 -->
+
+                        <section class="process-family">
+
+                            <div class="family-header">
+
+                                <div class="family-number">
+                                    05
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        FAMILIA
+                                    </span>
+
+                                    <strong>
+                                        Ensamblaje
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="family-machines">
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-ENS-14"
+                                    data-family="ensamblaje"
+                                    data-name="Brazo robótico de ensamblaje"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <circle cx="7" cy="18" r="2"></circle>
+
+                                            <path d="M7 16V9l5-3 3 3-2 3 4 3"></path>
+
+                                            <circle cx="17" cy="15" r="2"></circle>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-ENS-14
+                                    </span>
+
+                                    <strong>
+                                        Brazo robótico de ensamblaje
+                                    </strong>
+
+                                    <small>
+                                        Posición · Torque · Velocidad
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-ENS-15"
+                                    data-family="ensamblaje"
+                                    data-name="Atornillador automático"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M8 4v10"></path>
+
+                                            <path d="M8 14l4 4"></path>
+
+                                            <path d="M12 18h6"></path>
+
+                                            <circle cx="8" cy="4" r="2"></circle>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-ENS-15
+                                    </span>
+
+                                    <strong>
+                                        Atornillador automático
+                                    </strong>
+
+                                    <small>
+                                        Torque · Velocidad · Corriente
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-ENS-16"
+                                    data-family="ensamblaje"
+                                    data-name="Prensa de ensamblaje"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M5 19h14M7 19V7h10v12"></path>
+
+                                            <path d="M9 7V4h6v3"></path>
+
+                                            <path d="M10 12h4"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-ENS-16
+                                    </span>
+
+                                    <strong>
+                                        Prensa de ensamblaje
+                                    </strong>
+
+                                    <small>
+                                        Fuerza · Presión · Posición
+                                    </small>
+
+                                </article>
+
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- FAMILIA 6 -->
+
+                        <section class="process-family">
+
+                            <div class="family-header">
+
+                                <div class="family-number">
+                                    06
+                                </div>
+
+
+                                <div>
+
+                                    <span>
+                                        FAMILIA
+                                    </span>
+
+                                    <strong>
+                                        Motor / sistemas y pruebas
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="family-machines">
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-MOT-17"
+                                    data-family="motor-sistemas-pruebas"
+                                    data-name="Estación de montaje de tren motriz"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <circle cx="9" cy="13" r="4"></circle>
+
+                                            <circle cx="16" cy="13" r="2.5"></circle>
+
+                                            <path d="M9 9V6h7v4"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-MOT-17
+                                    </span>
+
+                                    <strong>
+                                        Estación de montaje de tren motriz
+                                    </strong>
+
+                                    <small>
+                                        Torque · Temperatura · Corriente
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-MOT-18"
+                                    data-family="motor-sistemas-pruebas"
+                                    data-name="Banco de pruebas del motor / tren motriz"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <circle cx="12" cy="12" r="7"></circle>
+
+                                            <path d="M12 5v14M5 12h14"></path>
+
+                                            <circle cx="12" cy="12" r="2"></circle>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-MOT-18
+                                    </span>
+
+                                    <strong>
+                                        Banco de pruebas del motor / tren motriz
+                                    </strong>
+
+                                    <small>
+                                        Temperatura · RPM · Vibración · Presión
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-MOT-19"
+                                    data-family="motor-sistemas-pruebas"
+                                    data-name="Sistema de inspección visual"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <rect x="4" y="5" width="16" height="14" rx="2"></rect>
+
+                                            <circle cx="12" cy="12" r="3"></circle>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-MOT-19
+                                    </span>
+
+                                    <strong>
+                                        Sistema de inspección visual
+                                    </strong>
+
+                                    <small>
+                                        Imágenes · Posición · Dimensiones
+                                    </small>
+
+                                </article>
+
+
+
+                                <article
+                                    class="process-machine normal"
+                                    data-machine="EQ-MOT-20"
+                                    data-family="motor-sistemas-pruebas"
+                                    data-name="Banco de pruebas final del vehículo"
+                                >
+
+                                    <div class="machine-node">
+
+                                        <span class="machine-pulse"></span>
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M4 17h16"></path>
+
+                                            <circle cx="7" cy="18" r="2"></circle>
+
+                                            <circle cx="17" cy="18" r="2"></circle>
+
+                                            <path d="M7 14h10l-2-5H9l-2 5Z"></path>
+
+                                        </svg>
+
+                                    </div>
+
+                                    <span class="process-id">
+                                        EQ-MOT-20
+                                    </span>
+
+                                    <strong>
+                                        Banco de pruebas final del vehículo
+                                    </strong>
+
+                                    <small>
+                                        Velocidad · Temperatura · Presión · Corriente
+                                    </small>
+
+                                </article>
+
+
+                            </div>
+
+                        </section>
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     ALERTAS + TENDENCIA
+                ================================================== -->
+
+                <section class="top-dashboard-grid">
+
+
+                    <!-- ALERTAS -->
+
+                    <article
+                        class="panel alerts-panel"
+                        id="alerts"
+                    >
+
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-kicker">
+                                    EVENTOS
+                                </span>
+
+                                <h2>
+                                    Alertas activas
+                                </h2>
+
+                            </div>
+
+
+                            <span class="alert-count">
+                                02
+                            </span>
+
+                        </div>
+
+
+                        <div class="alerts-list">
+
+
+                            <div class="alert-item critical">
+
+                                <div class="alert-icon">
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <path d="M12 4 3 20h18L12 4Z"></path>
+
+                                        <path d="M12 9v5"></path>
+
+                                        <path d="M12 17h.01"></path>
+
+                                    </svg>
+
+                                </div>
+
+
+                                <div class="alert-content">
+
+                                    <div class="alert-title-row">
+
+                                        <strong>
+                                            EQ-PIN-13
+                                        </strong>
+
+                                        <span>
+                                            ANOMALÍA
+                                        </span>
+
+                                    </div>
+
+
+                                    <p>
+                                        Condición de temperatura requiere diagnóstico.
+                                    </p>
+
+
+                                    <small>
+                                        Horno de curado
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="alert-item warning">
+
+                                <div class="alert-icon">
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <path d="M12 4 3 20h18L12 4Z"></path>
+
+                                        <path d="M12 9v5"></path>
+
+                                        <path d="M12 17h.01"></path>
+
+                                    </svg>
+
+                                </div>
+
+
+                                <div class="alert-content">
+
+                                    <div class="alert-title-row">
+
+                                        <strong>
+                                            EQ-CAR-07
+                                        </strong>
+
+                                        <span>
+                                            SEGUIMIENTO
+                                        </span>
+
+                                    </div>
+
+
+                                    <p>
+                                        Variables del proceso requieren supervisión preventiva.
+                                    </p>
+
+
+                                    <small>
+                                        Robot de soldadura por puntos
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="alert-footer">
+
+                                <span class="status-indicator purple"></span>
+
+                                Monitoreo de NOVA activo
+
+                            </div>
+
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- TENDENCIA -->
+
+                    <article
+                        class="panel chart-panel"
+                        id="history"
+                    >
+
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-kicker">
+                                    ANÁLISIS
+                                </span>
+
+                                <h2>
+                                    Tendencia de riesgo
+                                </h2>
+
+                            </div>
+
+
+                            <div class="chart-meta">
+
+                                <span class="chart-dot purple"></span>
+
+                                <span>
+                                    Últimas lecturas
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="risk-chart">
+
+
+                            <div class="chart-grid-lines">
+
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                            </div>
+
+
+                            <div class="chart-axis-labels">
+
+                                <span>
+                                    100
+                                </span>
+
+                                <span>
+                                    75
+                                </span>
+
+                                <span>
+                                    50
+                                </span>
+
+                                <span>
+                                    25
+                                </span>
+
+                                <span>
+                                    0
+                                </span>
+
+                            </div>
+
+
+                            <div class="chart-line"></div>
+
+
+                            <div class="chart-explanation">
+                                <span><b>↑ Sube:</b> aumentan las variables de riesgo.</span>
+                                <span><b>→ Se mantiene:</b> las lecturas permanecen estables.</span>
+                                <span><b>↓ Baja:</b> las variables mejoran o se normalizan.</span>
+                            </div>
+
+
+                            <div class="chart-bottom">
+
+                                <span>
+                                    -12h
+                                </span>
+
+                                <span>
+                                    -9h
+                                </span>
+
+                                <span>
+                                    -6h
+                                </span>
+
+                                <span>
+                                    -3h
+                                </span>
+
+                                <span>
+                                    Ahora
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </article>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     CONTROL DE MONITOREO
+                ================================================== -->
+
+                <section
+                    class="middle-dashboard-grid"
+                    id="monitoring-control"
+                >
+
+
+                    <!-- SIMULACIÓN -->
+
+                    <article class="panel control-panel">
+
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-kicker">
+                                    MONITOREO NOVA
+                                </span>
+
+                                <h2>
+                                    Control de monitoreo
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="control-status-box">
+
+
+                            <div class="control-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="8"
+                                    ></circle>
+
+                                    <path
+                                        d="M12 8v4l3 2"
+                                    ></path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    MONITOREO CONTINUO
+                                </strong>
+
+                                <span>
+                                    Lecturas procesadas de forma continua
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="control-group">
+
+
+                            <label for="simulationButton">
+                                Monitoreo de la planta
+                            </label>
+
+
+                            <button
+                                type="button"
+                                id="simulationButton"
+                                class="primary-button"
+                            >
+                                ▶ Iniciar monitoreo
+                            </button>
+
+
+                            <div
+                                id="simulationStatus"
+                                class="simulation-status"
+                            >
+Monitoreo continuo al iniciar sesión
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="control-divider"></div>
+
+
+                        <div class="control-group">
+
+
+                            <label for="scanDevice">
+                                Máquina a consultar
+                            </label>
+
+
+                            <select
+                                id="scanDevice"
+                                class="nova-select"
+                            >
+
+
+                                <option value="EQ-LOG-01">
+                                    EQ-LOG-01 · Montacargas industrial
+                                </option>
+
+
+                                <option value="EQ-LOG-02">
+                                    EQ-LOG-02 · AGV / Vehículo guiado automático
+                                </option>
+
+
+                                <option value="EQ-LOG-03">
+                                    EQ-LOG-03 · Transportador industrial
+                                </option>
+
+
+                                <option value="EQ-EST-04">
+                                    EQ-EST-04 · Prensa hidráulica
+                                </option>
+
+
+                                <option value="EQ-EST-05">
+                                    EQ-EST-05 · Prensa mecánica
+                                </option>
+
+
+                                <option value="EQ-EST-06">
+                                    EQ-EST-06 · Máquina de corte CNC
+                                </option>
+
+
+                                <option value="EQ-CAR-07">
+                                    EQ-CAR-07 · Robot de soldadura por puntos
+                                </option>
+
+
+                                <option value="EQ-CAR-08">
+                                    EQ-CAR-08 · Robot de soldadura por arco
+                                </option>
+
+
+                                <option value="EQ-CAR-09">
+                                    EQ-CAR-09 · Sistema de sujeción / Clamp
+                                </option>
+
+
+                                <option value="EQ-CAR-10">
+                                    EQ-CAR-10 · Robot de manipulación
+                                </option>
+
+
+                                <option value="EQ-PIN-11">
+                                    EQ-PIN-11 · Robot de pintura
+                                </option>
+
+
+                                <option value="EQ-PIN-12">
+                                    EQ-PIN-12 · Cabina de pintura / Ventilación
+                                </option>
+
+
+                                <option
+                                    value="EQ-PIN-13"
+                                    selected
+                                >
+                                    EQ-PIN-13 · Horno de curado
+                                </option>
+
+
+                                <option value="EQ-ENS-14">
+                                    EQ-ENS-14 · Brazo robótico de ensamblaje
+                                </option>
+
+
+                                <option value="EQ-ENS-15">
+                                    EQ-ENS-15 · Atornillador automático
+                                </option>
+
+
+                                <option value="EQ-ENS-16">
+                                    EQ-ENS-16 · Prensa de ensamblaje
+                                </option>
+
+
+                                <option value="EQ-MOT-17">
+                                    EQ-MOT-17 · Estación de montaje de tren motriz
+                                </option>
+
+
+                                <option value="EQ-MOT-18">
+                                    EQ-MOT-18 · Banco de pruebas del motor / tren motriz
+                                </option>
+
+
+                                <option value="EQ-MOT-19">
+                                    EQ-MOT-19 · Sistema de inspección visual
+                                </option>
+
+
+                                <option value="EQ-MOT-20">
+                                    EQ-MOT-20 · Banco de pruebas final del vehículo
+                                </option>
+
+
+                            </select>
+
+
+                            <button
+                                type="button"
+                                id="scanButton"
+                                class="secondary-button"
+                            >
+                                🔍 Consultar máquina
+                            </button>
+
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- RIESGO -->
+
+                    <article
+                        class="panel risk-panel"
+                        id="monitoring"
+                    >
+
+
+                        <div class="panel-header">
+
+
+                            <div>
+
+                                <span class="panel-kicker">
+                                    CONDICIÓN DEL ACTIVO
+                                </span>
+
+
+                                <h2>
+                                    Índice de riesgo
+                                </h2>
+
+                            </div>
+
+
+                            <span class="panel-tag">
+                                DEMOSTRACIÓN
+                            </span>
+
+
+                        </div>
+
+
+                        <div class="risk-content">
+
+
+                            <div class="risk-circle-wrap">
+
+
+                                <div class="risk-circle">
+
+
+                                    <div class="risk-circle-inner">
+
+
+                                        <strong id="riskValue">
+                                            88%
+                                        </strong>
+
+
+                                        <span>
+                                            Riesgo
+                                        </span>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="risk-details">
+
+
+                                <div class="machine-reference">
+
+
+                                    <span class="detail-label">
+                                        MÁQUINA SELECCIONADA
+                                    </span>
+
+
+                                    <strong id="riskDeviceLabel">
+                                        EQ-PIN-13 · Horno de curado
+                                    </strong>
+
+
+                                </div>
+
+
+
+                                <div class="risk-status">
+
+
+                                    <span class="status-dot red"></span>
+
+
+                                    <strong id="riskStatusText">
+                                        Anomalía detectada
+                                    </strong>
+
+
+                                </div>
+
+
+
+                                <p id="riskDescription">
+                                    NOVA presenta una condición de
+                                    demostración que requiere diagnóstico.
+                                </p>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </article>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     VARIABLES DE LA MÁQUINA
+                ================================================== -->
+
+                <section
+                    class="panel metrics-panel"
+                    id="machineMonitoring"
+                >
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-kicker">
+                                VARIABLES MONITOREADAS
+                            </span>
+
+
+                            <h2>
+                                Estado de la máquina
+                            </h2>
+
+                        </div>
+
+
+                        <span
+                            class="panel-machine"
+                            id="metricsDeviceLabel"
+                        >
+                            EQ-PIN-13 · Horno de curado
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="metrics-grid">
+
+
+                        <!-- VARIABLE 1 -->
+
+                        <div class="metric-card">
+
+
+                            <div class="metric-top">
+
+
+                                <div class="metric-icon purple">
+
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <path
+                                            d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0Z"
+                                        ></path>
+
+                                        <path
+                                            d="M12 12V6"
+                                        ></path>
+
+                                    </svg>
+
+
+                                </div>
+
+
+                                <span class="metric-state">
+                                    VARIABLE
+                                </span>
+
+
+                            </div>
+
+
+                            <span class="metric-label">
+                                Variable 1
+                            </span>
+
+
+                            <strong
+                                class="metric-value"
+                                id="cpuValue"
+                            >
+                                82 °C
+                            </strong>
+
+
+                            <div class="metric-bar">
+
+                                <span
+                                    id="cpuBar"
+                                    style="width:82%;"
+                                ></span>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- VARIABLE 2 -->
+
+                        <div class="metric-card">
+
+
+                            <div class="metric-top">
+
+
+                                <div class="metric-icon blue">
+
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <path
+                                            d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"
+                                        ></path>
+
+                                    </svg>
+
+
+                                </div>
+
+
+                                <span class="metric-state">
+                                    VARIABLE
+                                </span>
+
+
+                            </div>
+
+
+                            <span class="metric-label">
+                                Variable 2
+                            </span>
+
+
+                            <strong
+                                class="metric-value"
+                                id="ramValue"
+                            >
+                                91
+                            </strong>
+
+
+                            <div class="metric-bar">
+
+                                <span
+                                    id="ramBar"
+                                    style="width:91%;"
+                                ></span>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- VARIABLE 3 -->
+
+                        <div class="metric-card">
+
+
+                            <div class="metric-top">
+
+
+                                <div class="metric-icon cyan">
+
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <path
+                                            d="M3 12h3l2-7 4 14 2-7h7"
+                                        ></path>
+
+                                    </svg>
+
+
+                                </div>
+
+
+                                <span class="metric-state">
+                                    VARIABLE
+                                </span>
+
+
+                            </div>
+
+
+                            <span class="metric-label">
+                                Variable 3
+                            </span>
+
+
+                            <strong
+                                class="metric-value"
+                                id="diskValue"
+                            >
+                                6.1
+                            </strong>
+
+
+                            <div class="metric-bar">
+
+                                <span
+                                    id="diskBar"
+                                    style="width:76%;"
+                                ></span>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- VARIABLE 4 -->
+
+                        <div class="metric-card">
+
+
+                            <div class="metric-top">
+
+
+                                <div class="metric-icon orange">
+
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="8"
+                                        ></circle>
+
+                                        <path
+                                            d="M12 7v5l3 2"
+                                        ></path>
+
+                                    </svg>
+
+
+                                </div>
+
+
+                                <span class="metric-state">
+                                    VARIABLE
+                                </span>
+
+
+                            </div>
+
+
+                            <span class="metric-label">
+                                Variable 4
+                            </span>
+
+
+                            <strong
+                                class="metric-value"
+                                id="temperatureValue"
+                            >
+                                4210
+                            </strong>
+
+
+                            <div class="metric-bar">
+
+                                <span
+                                    id="temperatureBar"
+                                    style="width:70%;"
+                                ></span>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     LISTADO DE LAS 20 MÁQUINAS
+                ================================================== -->
+
+                <section
+                    class="panel machine-list-panel"
+                    id="machines"
+                >
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-kicker">
+                                INVENTARIO DE ACTIVOS
+                            </span>
+
+
+                            <h2>
+                                Máquinas monitoreadas
+                            </h2>
+
+                        </div>
+
+
+                        <div class="machine-list-actions">
+
+
+                            <select
+                                id="deviceFilter"
+                                class="nova-filter"
+                            >
+
+                                <option value="all">
+                                    Todas
+                                </option>
+
+                                <option value="normal">
+                                    Normales
+                                </option>
+
+                                <option value="warning">
+                                    En seguimiento
+                                </option>
+
+                                <option value="anomaly">
+                                    Anomalías
+                                </option>
+
+                            </select>
+
+
+
+                            <select
+                                id="familyFilter"
+                                class="nova-filter"
+                            >
+
+                                <option value="all">
+                                    Todas las familias
+                                </option>
+
+                                <option value="recepcion-logistica">
+                                    Recepción y logística
+                                </option>
+
+                                <option value="estampado-conformado">
+                                    Estampado y conformado
+                                </option>
+
+                                <option value="carroceria-soldadura">
+                                    Carrocería y soldadura
+                                </option>
+
+                                <option value="pintura-tratamiento">
+                                    Pintura y tratamiento
+                                </option>
+
+                                <option value="ensamblaje">
+                                    Ensamblaje
+                                </option>
+
+                                <option value="motor-sistemas-pruebas">
+                                    Motor / sistemas y pruebas
+                                </option>
+
+                            </select>
+
+
+
+                            <button
+                                type="button"
+                                class="add-machine-button"
+                                id="addMachineButton"
+                            >
+                                + Agregar máquina
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="machine-table-wrap">
+
+
+                        <div class="machine-table-header">
+
+                            <span>
+                                MÁQUINA
+                            </span>
+
+                            <span>
+                                FAMILIA
+                            </span>
+
+                            <span>
+                                ESTADO
+                            </span>
+
+                            <span>
+                                RIESGO
+                            </span>
+
+                            <span>
+                                ACCIÓN
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- 01 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-LOG-01"
+                            data-family="recepcion-logistica"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <rect x="3" y="7" width="13" height="9" rx="1"></rect>
+
+                                        <path d="M16 10h3l2 3v3h-5"></path>
+
+                                        <path d="M7 16v3M17 16v3"></path>
+
+                                    </svg>
+
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-LOG-01
+                                    </span>
+
+
+                                    <strong class="device-name">
+                                        Montacargas industrial
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Recepción y logística
+                            </div>
+
+
+                            <div class="device-state">
+
+                                <span class="state-dot green-dot"></span>
+
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                38%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-LOG-01"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 02 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-LOG-02"
+                            data-family="recepcion-logistica"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <rect x="4" y="8" width="16" height="9" rx="2"></rect>
+
+                                        <circle cx="8" cy="18" r="1.5"></circle>
+
+                                        <circle cx="16" cy="18" r="1.5"></circle>
+
+                                    </svg>
+
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-LOG-02
+                                    </span>
+
+
+                                    <strong class="device-name">
+                                        AGV / Vehículo guiado automático
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Recepción y logística
+                            </div>
+
+
+                            <div class="device-state">
+
+                                <span class="state-dot green-dot"></span>
+
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                32%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-LOG-02"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 03 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-LOG-03"
+                            data-family="recepcion-logistica"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <path d="M4 15h16"></path>
+
+                                        <circle cx="7" cy="18" r="2"></circle>
+
+                                        <circle cx="17" cy="18" r="2"></circle>
+
+                                    </svg>
+
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-LOG-03
+                                    </span>
+
+
+                                    <strong class="device-name">
+                                        Transportador industrial
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Recepción y logística
+                            </div>
+
+
+                            <div class="device-state">
+
+                                <span class="state-dot green-dot"></span>
+
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                35%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-LOG-03"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 04 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-EST-04"
+                            data-family="estampado-conformado"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M5 19h14M7 19V8h10v11M9 8V5h6v3"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-EST-04
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Prensa hidráulica
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Estampado y conformado
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                42%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-EST-04"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 05 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-EST-05"
+                            data-family="estampado-conformado"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M5 19h14M7 19V8h10v11"></path>
+                                        <circle cx="12" cy="7" r="2"></circle>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-EST-05
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Prensa mecánica
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Estampado y conformado
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                39%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-EST-05"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 06 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-EST-06"
+                            data-family="estampado-conformado"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="4" y="5" width="16" height="13" rx="2"></rect>
+                                        <path d="M8 9h8M8 13h5"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-EST-06
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Máquina de corte CNC
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Estampado y conformado
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                41%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-EST-06"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 07 -->
+
+                        <article
+                            class="device-card warning"
+                            data-device="EQ-CAR-07"
+                            data-family="carroceria-soldadura"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="8" cy="17" r="2"></circle>
+                                        <circle cx="16" cy="17" r="2"></circle>
+                                        <path d="M8 15V7l6-3 2 3v8M8 9h8"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-CAR-07
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Robot de soldadura por puntos
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Carrocería y soldadura
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot yellow-dot"></span>
+                                <span class="nova-state-text">
+                                    Seguimiento
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value yellow-text">
+                                68%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-CAR-07"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 08 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-CAR-08"
+                            data-family="carroceria-soldadura"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="8" cy="17" r="2"></circle>
+                                        <circle cx="16" cy="17" r="2"></circle>
+                                        <path d="M8 15V7h5l3 3v5"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-CAR-08
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Robot de soldadura por arco
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Carrocería y soldadura
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                37%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-CAR-08"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 09 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-CAR-09"
+                            data-family="carroceria-soldadura"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M5 8h14M7 8v9M17 8v9M4 17h16"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-CAR-09
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Sistema de sujeción / Clamp
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Carrocería y soldadura
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                34%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-CAR-09"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 10 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-CAR-10"
+                            data-family="carroceria-soldadura"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M5 19h14M8 19V12l4-3 4 3v7"></path>
+                                        <circle cx="12" cy="6" r="2"></circle>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-CAR-10
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Robot de manipulación
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Carrocería y soldadura
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                44%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-CAR-10"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 11 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-PIN-11"
+                            data-family="pintura-tratamiento"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M6 18h12M8 18V9h8v9M10 9V6h4v3"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-PIN-11
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Robot de pintura
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Pintura y tratamiento
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                36%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-PIN-11"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 12 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-PIN-12"
+                            data-family="pintura-tratamiento"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M5 19h14M7 19V8h10v11M9 8V5h6v3M9 12h6"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-PIN-12
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Cabina de pintura / Ventilación
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Pintura y tratamiento
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                45%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-PIN-12"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 13 -->
+
+                        <article
+                            class="device-card anomaly"
+                            data-device="EQ-PIN-13"
+                            data-family="pintura-tratamiento"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="4" y="6" width="16" height="13" rx="2"></rect>
+                                        <path d="M8 10c2-2 2 3 4 1s2-3 4-1"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-PIN-13
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Horno de curado
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Pintura y tratamiento
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot red-dot"></span>
+                                <span class="nova-state-text">
+                                    Anomalía
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value red-text">
+                                88%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-PIN-13"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 14 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-ENS-14"
+                            data-family="ensamblaje"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="7" cy="18" r="2"></circle>
+                                        <path d="M7 16V9l5-3 3 3-2 3 4 3"></path>
+                                        <circle cx="17" cy="15" r="2"></circle>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-ENS-14
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Brazo robótico de ensamblaje
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Ensamblaje
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                43%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-ENS-14"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 15 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-ENS-15"
+                            data-family="ensamblaje"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M8 4v10M8 14l4 4h6"></path>
+                                        <circle cx="8" cy="4" r="2"></circle>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-ENS-15
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Atornillador automático
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Ensamblaje
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                40%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-ENS-15"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 16 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-ENS-16"
+                            data-family="ensamblaje"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M5 19h14M7 19V7h10v12M9 7V4h6v3M10 12h4"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-ENS-16
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Prensa de ensamblaje
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Ensamblaje
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                42%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-ENS-16"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 17 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-MOT-17"
+                            data-family="motor-sistemas-pruebas"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="9" cy="13" r="4"></circle>
+                                        <circle cx="16" cy="13" r="2.5"></circle>
+                                        <path d="M9 9V6h7v4"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-MOT-17
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Estación de montaje de tren motriz
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Motor / sistemas y pruebas
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                39%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-MOT-17"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 18 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-MOT-18"
+                            data-family="motor-sistemas-pruebas"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="7"></circle>
+                                        <path d="M12 5v14M5 12h14"></path>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-MOT-18
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Banco de pruebas del motor / tren motriz
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Motor / sistemas y pruebas
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                47%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-MOT-18"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 19 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-MOT-19"
+                            data-family="motor-sistemas-pruebas"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="4" y="5" width="16" height="14" rx="2"></rect>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-MOT-19
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Sistema de inspección visual
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Motor / sistemas y pruebas
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                31%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-MOT-19"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+
+                        <!-- 20 -->
+
+                        <article
+                            class="device-card normal"
+                            data-device="EQ-MOT-20"
+                            data-family="motor-sistemas-pruebas"
+                        >
+
+                            <div class="machine-main">
+
+                                <div class="machine-mini-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M4 17h16"></path>
+                                        <circle cx="7" cy="18" r="2"></circle>
+                                        <circle cx="17" cy="18" r="2"></circle>
+                                        <path d="M7 14h10l-2-5H9l-2 5Z"></path>
+                                    </svg>
+                                </div>
+
+
+                                <div class="machine-name-wrap">
+
+                                    <span class="device-id">
+                                        EQ-MOT-20
+                                    </span>
+
+                                    <strong class="device-name">
+                                        Banco de pruebas final del vehículo
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="machine-area">
+                                Motor / sistemas y pruebas
+                            </div>
+
+
+                            <div class="device-state">
+                                <span class="state-dot green-dot"></span>
+                                <span class="nova-state-text">
+                                    Normal
+                                </span>
+                            </div>
+
+
+                            <div class="machine-risk-value green-text">
+                                46%
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="machine-action"
+                                data-action="view-machine"
+                                data-device="EQ-MOT-20"
+                            >
+                                Ver
+                            </button>
+
+                        </article>
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     MANTENIMIENTO
+                ================================================== -->
+
+                <section
+                    class="recommendation-panel"
+                    id="maintenance"
+                >
+
+
+                    <div class="recommendation-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M14.5 6.5a4 4 0 0 0-5.3 5.3L4 17l3 3 5.2-5.2a4 4 0 0 0 5.3-5.3l-2.1 2.1-2-2 2.1-2.1Z"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+
+                    <div class="recommendation-content">
+
+                        <span>
+                            RECOMENDACIÓN NOVA
+                        </span>
+
+
+                        <p class="recommendation-text">
+                            Se recomienda realizar diagnóstico e inspección del EQ-PIN-13.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="maintenance-button"
+                        id="maintenanceButton"
+                    >
+                        🛠 Revisar máquina
+                    </button>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     ADMINISTRACIÓN
+                ================================================== -->
+
+                <section
+                    class="panel admin-preview"
+                    id="admin"
+                    data-role="admin"
+                >
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-kicker">
+                                GESTIÓN DE ACTIVOS
+                            </span>
+
+
+                            <h2>
+                                Administración de máquinas
+                            </h2>
+
+                        </div>
+
+
+                        <span class="panel-tag purple-tag">
+                            ADMIN
+                        </span>
+
+
+                    </div>
+
+
+
+                    <div class="admin-preview-grid">
+
+
+                        <!-- AGREGAR -->
+
+                        <button
+                            type="button"
+                            class="admin-feature"
+                            id="adminAddMachine"
+                            data-admin-action="add"
+                            data-role="admin"
+                        >
+
+
+                            <span class="admin-feature-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path
+                                        d="M12 5v14M5 12h14"
+                                    ></path>
+
+                                </svg>
+
+                            </span>
+
+
+                            <span>
+
+                                <strong>
+                                    Agregar máquina
+                                </strong>
+
+                                <span>
+                                    Registrar un nuevo activo
+                                </span>
+
+                            </span>
+
+
+                        </button>
+
+
+
+                        <!-- EDITAR -->
+
+                        <button
+                            type="button"
+                            class="admin-feature"
+                            id="adminEditMachine"
+                            data-admin-action="edit"
+                            data-role="admin"
+                        >
+
+
+                            <span class="admin-feature-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path
+                                        d="m5 16-1 4 4-1 10-10-3-3L5 16Z"
+                                    ></path>
+
+                                </svg>
+
+                            </span>
+
+
+                            <span>
+
+                                <strong>
+                                    Editar información
+                                </strong>
+
+                                <span>
+                                    Actualizar datos del activo
+                                </span>
+
+                            </span>
+
+
+                        </button>
+
+
+
+                        <!-- ELIMINAR -->
+
+                        <button
+                            type="button"
+                            class="admin-feature"
+                            id="adminDeleteMachine"
+                            data-admin-action="delete"
+                            data-role="admin"
+                        >
+
+
+                            <span class="admin-feature-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path
+                                        d="M6 7h12M9 7V4h6v3M8 7l1 13h6l1-13"
+                                    ></path>
+
+                                </svg>
+
+                            </span>
+
+
+                            <span>
+
+                                <strong>
+                                    Eliminar máquina
+                                </strong>
+
+                                <span>
+                                    Gestionar activos obsoletos
+                                </span>
+
+                            </span>
+
+
+                        </button>
+
+
+
+                        <!-- SENSORES -->
+
+                        <button
+                            type="button"
+                            class="admin-feature"
+                            id="adminSensorManagement"
+                            data-admin-action="sensors"
+                            data-role="admin"
+                        >
+
+
+                            <span class="admin-feature-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path
+                                        d="M12 3v18M5 8h14M7 16h10"
+                                    ></path>
+
+                                </svg>
+
+                            </span>
+
+
+                            <span>
+
+                                <strong>
+                                    Variables y sensores
+                                </strong>
+
+                                <span>
+                                    Configurar parámetros monitoreados
+                                </span>
+
+                            </span>
+
+
+                        </button>
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     ZONA DE HISTORIAL
+                ================================================== -->
+
+                <section
+                    class="panel history-info-panel"
+                    id="historyPanel"
+                >
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-kicker">
+                                REGISTRO
+                            </span>
+
+
+                            <h2>
+                                Historial de monitoreo
+                            </h2>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="history-placeholder">
+
+
+                        <div class="history-placeholder-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="8"
+                                ></circle>
+
+                                <path
+                                    d="M12 7v5l3 2"
+                                ></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Historial por máquina
+                            </strong>
+
+
+                            <p>
+                                Las lecturas, alertas, cambios de estado y mantenimientos
+                                se asociarán a cada activo cuando se conecte el almacenamiento
+                                del sistema.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     PIE
+                ================================================== -->
+
+                <footer class="nova-footer">
+
+
+                    <div>
+
+                        <strong>
+                            NOVA Monitoring
+                        </strong>
+
+
+                        <span>
+                            Monitoreo inteligente para procesos industriales automotrices
+                        </span>
+
+                    </div>
+
+
+                    <div class="footer-right">
+
+                        <span>
+                            Prototipo
+                        </span>
+
+
+                        <span>
+                            •
+                        </span>
+
+
+                        <span>
+                            NOVA Industrial
+                        </span>
+
+                    </div>
+
+
+                </footer>
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- =========================================================
+         MODAL BASE
+         El JavaScript lo utilizará para agregar / editar / eliminar
+         máquinas sin tener que cambiar nuevamente el HTML.
+    ========================================================== -->
+
+    <div
+        id="novaModal"
+        class="nova-modal"
+        aria-hidden="true"
+    >
+
+        <div class="nova-modal-backdrop"></div>
+
+
+        <div
+            class="nova-modal-window"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="novaModalTitle"
+        >
+
+            <div class="nova-modal-header">
+
+                <div>
+
+                    <span
+                        class="panel-kicker"
+                        id="novaModalKicker"
+                    >
+                        NOVA
+                    </span>
+
+
+                    <h2 id="novaModalTitle">
+                        Gestión de máquina
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="novaModalClose"
+                    class="nova-modal-close"
+                    aria-label="Cerrar"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                id="novaModalContent"
+                class="nova-modal-content"
+            ></div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
